@@ -69,29 +69,35 @@ close_graph_file(IO) -> file:close(IO).
 %% form `{App, Dep}' for each element in this deps list.  Recurse and
 %% attempt to read the rebar.config for each dep.
 map_rebar(BaseDir, Path, Acc) ->
-  From = app_name(Path),
-  case file:consult(Path) of
-    {ok, Opts} ->
-      Deps = proplists:get_value(deps, Opts, []),
-      lists:foldl(
-        fun({DepName, _, _}, A) ->
-            To = atom_to_list(DepName),
-            case ordsets:is_element({To, From}, A) of
-              true ->
-                ordsets:add_element({From, To, [{color, red}]}, A);
-              false ->
-                NA = ordsets:add_element({From, To, []}, A),
-                DepPath = filename:join(
-                    [BaseDir, "deps",
-                     atom_to_list(DepName),
-                     "rebar.config"]),
-                map_rebar(BaseDir, DepPath, NA)
-            end
-        end,
-        Acc,
-        Deps);
-    _ ->
-      ordsets:add_element({From, [], []}, Acc)
+  case app_name(Path) of
+    rebar_deps_graph -> Acc;
+    From ->
+      case file:consult(Path) of
+        {ok, Opts} ->
+          Deps = proplists:get_value(deps, Opts, []),
+          lists:foldl(
+            fun({DepName, _, _}, A) ->
+                case atom_to_list(DepName) of
+                  rebar_deps_graph -> A;
+                  To ->
+                    case ordsets:is_element({To, From}, A) of
+                      true ->
+                        ordsets:add_element({From, To, [{color, red}]}, A);
+                      false ->
+                        NA = ordsets:add_element({From, To, []}, A),
+                        DepPath = filename:join(
+                            [BaseDir, "deps",
+                             atom_to_list(DepName),
+                             "rebar.config"]),
+                        map_rebar(BaseDir, DepPath, NA)
+                    end
+                end
+            end,
+            Acc,
+            Deps);
+        _ ->
+          ordsets:add_element({From, [], []}, Acc)
+      end
   end.
 
 app_name(Path) ->
