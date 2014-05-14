@@ -43,7 +43,7 @@ An edge between a named node and a point indicate that the plugin was unable to 
 
 ## Licence 
 
-This plugin is based on [mapdeps.erl](https://github.com/basho/riak/blob/develop/misc/mapdeps.erl) from Basho, licenced under the Apache License, Version 2.0. 
+This plugin is based on [mapdeps.erl](https://github.com/basho/riak/blob/develop/misc/mapdeps.erl), licenced under the Apache License, Version 2.0. 
 
 Copyright (c) 2013 Basho Technologies, Inc.
 
