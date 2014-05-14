@@ -108,7 +108,6 @@ app_name(Path) ->
 file_start(IO) ->
   io:format(IO, "digraph {~n", []),
   io:format(IO, "  rankdir=LR;~n", []),
-  io:format(IO, "  splines=ortho;~n", []),
   io:format(IO, "  remincross=true;~n", []),
   io:format(IO, "  node[shape=box];~n", []).
 
