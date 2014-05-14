@@ -25,7 +25,7 @@
 -export(['graph-deps'/2]).
 
 -define(ABORT(Str, Args), rebar_utils:abort(Str, Args)).
--define(PLUGIN_NODE, "deps_graph_plugin").
+-define(PLUGIN_NODE, "rebar_deps_graph").
 
 'graph-deps'(Config, _App) ->
   case rebar_utils:processing_base_dir(Config) of
