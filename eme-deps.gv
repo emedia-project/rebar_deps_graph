@@ -1,0 +1,33 @@
+digraph {
+  rankdir=LR;
+  splines=ortho;
+  remincross=true;
+  node[shape=box];
+  cowboy -> cowlib;
+  cowboy -> ranch;
+  missing_deps_for_cowlib[shape=point];
+  cowlib -> missing_deps_for_cowlib;
+  emdb -> jsx;
+  emdb -> lager;
+  emedia -> emdb;
+  emedia -> erlsom;
+  emedia -> erlydtl;
+  emedia -> eutils;
+  emedia -> ffmpeg;
+  emedia -> file_monitor;
+  emedia -> paris;
+  emedia -> ucp;
+  eutils -> eunit_formatters;
+  ffmpeg -> jsx;
+  ffmpeg -> ucp;
+  missing_deps_for_file_monitor[shape=point];
+  file_monitor -> missing_deps_for_file_monitor;
+  lager -> goldrush;
+  paris -> cowboy;
+  paris -> jsx;
+  paris -> lager;
+  paris -> mimetypes;
+  paris -> sync;
+  missing_deps_for_ranch[shape=point];
+  ranch -> missing_deps_for_ranch;
+}
