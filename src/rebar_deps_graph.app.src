@@ -1,4 +1,4 @@
-{application, deps_graph,
+{application, rebar_deps_graph,
  [
   {description, ""},
   {vsn, "1"},
@@ -7,6 +7,5 @@
                   kernel,
                   stdlib
                  ]},
-  {mod, { deps_graph_app, []}},
   {env, []}
  ]}.
