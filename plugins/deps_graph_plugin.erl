@@ -54,7 +54,7 @@ gen_graph(Config, Map) ->
   close_graph_file(IO).
 
 open_graph_file(Config) ->
-  case rebar_config:get_global(Config, graph, undefined) of
+  case rebar_config:get_global(Config, graph, rebar_config:get_local(Config, deps_graph_file, undefined)) of
     undefined -> standard_io;
     Path -> case file:open(Path, [write]) of
         {ok, IO} -> IO;

@@ -19,17 +19,21 @@ That's all ;)
 
 ## Usage
 
-While the plugin is _installed_, you can use the command :
+First, get the dependencies :
+
+```
+rebar get-deps
+```
+
+Then, use the `grapg-deps` command to generate the graph :
 
 ```
 rebar graph-deps [graph=<file>]
 ```
 
-Attribute `graph` allow you to specify an output file. If not present, the result will be send on the standard output.
+Attribute `graph` allow you to specify an output file. If not present, the result will be send on the standard output. You can also use the `deps_graph_file` configuration in your `rebar.config` file. If both are present, the `graph` option will be use.
 
 The output is a [Graphviz](http://graphviz.org/) file.
-
-> Before using `graph-deps` get the dependencies using `get-deps`.
 
 ## Example
 
