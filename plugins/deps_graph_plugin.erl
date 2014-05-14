@@ -25,6 +25,7 @@
 -export(['graph-deps'/2]).
 
 -define(ABORT(Str, Args), rebar_utils:abort(Str, Args)).
+-define(PLUGIN_NODE, "deps_graph_plugin").
 
 'graph-deps'(Config, _App) ->
   case rebar_utils:processing_base_dir(Config) of
@@ -70,7 +71,7 @@ close_graph_file(IO) -> file:close(IO).
 %% attempt to read the rebar.config for each dep.
 map_rebar(BaseDir, Path, Acc) ->
   case app_name(Path) of
-    rebar_deps_graph -> Acc;
+    ?PLUGIN_NODE -> Acc;
     From ->
       case file:consult(Path) of
         {ok, Opts} ->
@@ -78,7 +79,7 @@ map_rebar(BaseDir, Path, Acc) ->
           lists:foldl(
             fun({DepName, _, _}, A) ->
                 case atom_to_list(DepName) of
-                  rebar_deps_graph -> A;
+                  ?PLUGIN_NODE -> A;
                   To ->
                     case ordsets:is_element({To, From}, A) of
                       true ->
