@@ -77,7 +77,8 @@ map_rebar(BaseDir, Path, Acc) ->
         {ok, Opts} ->
           Deps = proplists:get_value(deps, Opts, []),
           lists:foldl(
-            fun({DepName, _, _}, A) ->
+            fun
+              ({DepName, _, _}, A) ->
                 case atom_to_list(DepName) of
                   ?PLUGIN_NODE -> A;
                   To ->
@@ -87,12 +88,14 @@ map_rebar(BaseDir, Path, Acc) ->
                       false ->
                         NA = ordsets:add_element({From, To, []}, A),
                         DepPath = filename:join(
-                            [BaseDir, "deps",
-                             atom_to_list(DepName),
-                             "rebar.config"]),
+                                    [BaseDir, "deps",
+                                     atom_to_list(DepName),
+                                     "rebar.config"]),
                         map_rebar(BaseDir, DepPath, NA)
                     end
-                end
+                end;
+              ({DepName, _, _, _}, A) ->
+                ordsets:add_element({From, atom_to_list(DepName), [{color, blue}]}, A)
             end,
             Acc,
             Deps);
